@@ -94,3 +94,8 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "whitelist_ips" {
+  type    = list(string)
+  default = []
+}

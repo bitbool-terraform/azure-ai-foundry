@@ -11,6 +11,16 @@ resource "azurerm_cognitive_account" "this" {
   local_auth_enabled             = true
   public_network_access_enabled = var.public_network_access_enabled
 
+  dynamic "network_acls" {
+    for_each = length(var.whitelist_ips) > 0 ? [1] : []
+
+    content {
+      default_action = "Deny"
+      bypass         = "None"
+      ip_rules       = var.whitelist_ips
+    }
+  }  
+
   identity {
     type = "SystemAssigned"
   }
